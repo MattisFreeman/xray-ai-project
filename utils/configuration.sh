@@ -57,14 +57,14 @@ configure () {
        google_speech_api_key)   eval "$1=\"$(dialog_input "Google Speech API KEY \nNot free, see https://cloud.google.com/speech/docs/getting-started" "${!1}" true)\"";;
        bing_speech_api_key)   eval "$1=\"$(dialog_input "Bing Speech API Key\nHow to get one: NOT YET AVAILABLE" "${!1}" true)\"";;
        check_updates)         options=('Always' 'Daily' 'Weekly' 'Never')
-                              case "$(dialog_select "Check Updates when Xaï starts up\nRecommended: Daily" options[@] "Daily")" in
+                              case "$(dialog_select "Check Updates when xaï starts up\nRecommended: Daily" options[@] "Daily")" in
                                   Always) check_updates=0;;
                                   Daily)  check_updates=1;;
                                   Weekly) check_updates=7;;
                                   Never)  check_updates=false;;
                               esac;;
        command_stt)           options=('google' 'bing' 'wit' 'snowboy' 'pocketsphinx')
-                              eval "$1=\"$(dialog_select "Which engine to use for the recognition of commands\nVisit http://openXaï.com/content/stt\nRecommended: bing" options[@] "${!1}")\""
+                              eval "$1=\"$(dialog_select "Which engine to use for the recognition of commands\nVisit http://openxaï.com/content/stt\nRecommended: bing" options[@] "${!1}")\""
                               [ "$command_stt" == "snowboy" ] && dialog_msg "Attention: Snowboy for commands will only be able to understand trained commands.\nTrain your commands in Settings > Voice Reco > Snowboy Settings > Train..."
                               source stt_engines/$command_stt/main.sh;;
        conversation_mode)     eval "$1=\"$(dialog_yesno "Wait for another command after first executed" "${!1}")\"";;
@@ -72,7 +72,7 @@ configure () {
        gain)                  eval "$1=\"$(dialog_input "Microphone gain\nCan be positive of negative integer, ex: -5, 0, 10...\nAdjust it by steps of 5, or less to finetune" "${!1}" true)\"";;
        google_speech_api_key) eval "$1=\"$(dialog_input "Google Speech API Key\nHow to get one: http://stackoverflow.com/a/26833337" "${!1}")\"";;
        xai_branch)             options=("master" "beta")
-                              eval "$1=\"$(dialog_select "Repository branch to use for Xaï updates\nRecommended: master" options[@] "${!1}")\""
+                              eval "$1=\"$(dialog_select "Repository branch to use for xaï updates\nRecommended: master" options[@] "${!1}")\""
                               git checkout $xai_branch || {
                                   xai_error "ERROR: an error has occured while checking out $xai_branch branch"
                                   xai_press_enter_to_continue
@@ -101,8 +101,8 @@ configure () {
                               ;;
        language_model)        eval "$1=\"$(dialog_input "PocketSphinx language model file" "${!1}")\"";;
        load)
-           source defaults/Xaï-config-default.sh
-           #[ -f Xaï-config.sh ] && source Xaï-config.sh # backward compatibility
+           source defaults/xaï-config-default.sh
+           #[ -f xaï-config.sh ] && source xaï-config.sh # backward compatibility
            for hook in "${hooks[@]}"; do
                if [ ! -f "hooks/$hook" ]; then
                    cp hooks/$hook.default hooks/$hook
@@ -191,7 +191,7 @@ configure () {
                  #echo "DEBUG: saving ${!varname} into config/$varname"
                  echo "${!varname}" > config/$varname
              done;;
-       send_usage_stats)    eval "$1=\"$(dialog_yesno "Send anynomous usage statistics to help improving Xaï" "${!1}")\"";;
+       send_usage_stats)    eval "$1=\"$(dialog_yesno "Send anynomous usage statistics to help improving xaï" "${!1}")\"";;
        separator)           eval "$1=\"$(dialog_input "Separator for multiple commands at once\nex: 'then' or empty to disable" "${!1}")\"";;
        show_commands)       eval "$1=\"$(dialog_yesno "Show commands on startup and possible answers" "${!1}")\"";;
        snowboy_checkticks)  eval "$1=\"$(dialog_yesno "Check ticks?\nReduce false positives but slower to react" "${!1}")\"";;
@@ -199,14 +199,14 @@ configure () {
        snowboy_token)       eval "$1=\"$(dialog_input "Snowboy token\nGet one at: https://snowboy.kitt.ai (in profile settings)" "${!1}" true)\"";;
        tempo)               eval "$1=\"$(dialog_input "Speech playback speed\nOriginal: 1.0" "${!1}" true)\"";;
        trigger)             local trigger_old="$trigger"
-                            eval "$1=\"$(dialog_input "How would you like your Xaï to be called?\n(Hotword to be said before speaking commands)" "${!1}" true)\""
+                            eval "$1=\"$(dialog_input "How would you like your xaï to be called?\n(Hotword to be said before speaking commands)" "${!1}" true)\""
                             if [ "$trigger_stt" = "snowboy" ]; then
-                                source stt_engines/$trigger_stt/main.sh # sourced after main menu in Xaï.sh
+                                source stt_engines/$trigger_stt/main.sh # sourced after main menu in xaï.sh
                                 stt_sb_train "$trigger" || trigger="$trigger_old"
                             fi
                             ;;
        trigger_mode)        options=("magic_word" "enter_key" "physical_button")
-                            eval "$1=\"$(dialog_select "How to trigger Xaï (before to say a command)" options[@] "${!1}")\""
+                            eval "$1=\"$(dialog_select "How to trigger xaï (before to say a command)" options[@] "${!1}")\""
                             ;;
        trigger_stt)         options=('snowboy' 'pocketsphinx' 'bing')
                             eval "$1=\"$(dialog_select "Which engine to use for the recognition of the hotword ($trigger)\n Visit http://openjarvis.com/content/tts Recommended: snowboy" options[@] "${!1}")\""
@@ -235,10 +235,10 @@ wizard () {
    mkdir -p config
 
    # initiate user commands & events if don't exist yet
-   [ -f Xaï-commands ] || cp defaults/Xaï-commands-default Xaï-commands
-   [ -f Xaï-events ] || cp defaults/Xaï-events-default Xaï-events
+   [ -f xaï-commands ] || cp defaults/xaï-commands-default xaï-commands
+   [ -f xaï-events ] || cp defaults/xaï-events-default xaï-events
 
-   dialog_msg "Hello, my name is Xaï, nice to meet you"
+   dialog_msg "Hello, my name is xaï, nice to meet you"
    configure "language"
 
    [ "$language" != "en_EN" ] && dialog_msg <<EOM
@@ -261,7 +261,7 @@ EOM
        if [ "$trigger_stt" = "snowboy" ]; then
            # use ' instead of " in dialog_msg
            dialog_msg <<EOM
-You can now record and train your own hotword within Xaï
+You can now record and train your own hotword within xaï
 Or you can immediately use the default universal hotword 'snowboy'
 EOM
           trigger="${trigger:-snowboy}"
@@ -293,7 +293,7 @@ EOM
 
    configure "save"
    dialog_msg <<EOM
-Congratulations! You can start using Xaï
+Congratulations! You can start using xaï
 Select Plugins to check out community commands
 Select Commands to add your own commands
 EOM
