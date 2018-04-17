@@ -229,7 +229,7 @@ xai_bt_connect () {
       echo -e "trust $1\nquit\n" | bluetoothctl >/dev/null
       xai_success "Paired"
     else
-      xai_error "Failed"
+      xai_error "Failed to pair your device"
       return 1
     fi
   fi
@@ -253,7 +253,7 @@ xai_bt_connect () {
      break
    fi
  done
- xai_error "Failed"
+ xai_error "Failed to sink your device"
  return 1
 }
 
@@ -263,12 +263,12 @@ xai_bt_disconnect () {
   for i in $(seq 1 5); do
     sleep 1
     if ! xai_bt_is_connect $1; then
-      xai_success "Disconnected"
+      xai_success "Disconnected !"
       xai_play "souds/connected.wav"
       return 0
     fi
   done
-  xai_error "Failed"
+  xai_error "Failed to disconnect your device"
   return 0
 }
 
@@ -278,7 +278,7 @@ xai_bt_forget () {
     xai_error "ERROR: $1 is not paired"
     return 1
   fi
-  printf "Removeving..."
+  printf "Removing..."
   (
     echo -e "untrust $1\n"
     sleep 1
