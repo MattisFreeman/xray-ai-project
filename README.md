@@ -1,7 +1,7 @@
 # XRAY Artificial Intelligence
 
 ## Synopsis
-XAÏ is an artificial intelligence, which will create a dialogue between the user and the machine and accompanied the user in different tasks.(example : "Read my emails !"What's the weather like?", etc..)
+xaï is an artificial intelligence, which will create a dialogue between the user and the machine and accompanied the user in different tasks.(example : "Read my emails !"What's the weather like?", etc..)
 
 ## Installation
 For the moment no installation is available... But when that happens, xaï will only be in French.
