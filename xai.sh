@@ -12,11 +12,11 @@ xai_help () { cat <<EOF
     -n  directly start xaï without menu
     -q  quit xai if running in background
     -r  uninstall
-    -s  just say something and exit, ex: ${0##*/} -s 'hello world'
+    -s  just say something and exit, ex: xai -s 'hello world'
     -u  force update
     -v  troubleshooting mode
     -w  no colors in output
-    -x  execute order, ex: ${0##*/} -x "switch on lights"
+    -x  execute order, ex: xai -x "switch on lights"
 EOF
 }
 
