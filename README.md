@@ -11,7 +11,7 @@ We just started !
 
 ## Contributors
 - Maxime G.
-- Mattis L.
+- Mattis F.
 - Brice G.
 
 > Do not hesitate to send us an email if you are interested to allow xaï to grow: xray.recrutement@outlook.com
